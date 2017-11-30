@@ -1,12 +1,19 @@
 "use strict"
 
 import React from 'react';
+import { bindActionCreators } from 'redux';
+import { getCart } from '../src/actions/cartActions';
 import Menu from './components/menu';
 import Footer from './components/Footer';
 
 import {connect} from 'react-redux';
 
 class Main extends React.Component {
+
+    componentDidMount() {
+        this.props.getCart();
+    }
+
     render() {
         return (
             <div>
@@ -23,5 +30,10 @@ function mapStateToProps(state) {
         totalQty: state.cart.totalQty
     }
 }
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({
+        getCart: getCart
+    }, dispatch)
+}
 
-export default connect(mapStateToProps)(Main);
+export default connect(mapStateToProps, mapDispatchToProps)(Main);
